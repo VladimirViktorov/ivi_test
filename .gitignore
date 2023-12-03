@@ -1,0 +1,8 @@
+bin/
+lib/
+include/
+pyvenv.cfg
+__pycache__/
+tests/output/
+.DS_Store
+junitxml_report.xml
