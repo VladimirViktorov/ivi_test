@@ -17,6 +17,9 @@ class APIRoutes():
     def __str__(self) -> str:
         return self.value
 
+class APIResults():
+    DELETE_CHARACTER = Template("Hero $name is deleted")
+
 class APIErrors():
     INVALID_AUTHENTICATION = "You have to login with proper credentials"
     NO_SUCH_NAME = "No such name"

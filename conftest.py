@@ -7,6 +7,10 @@ from clients.http.builder import get_http_client
 from constant import URL
 
 def pytest_addoption(parser):
+    """
+    Добавляет параметры командной строки для pytest.
+    :param parser: Парсер для аргументов командной строки.
+    """
     parser.addoption(
         "--login", 
         action="store", 
@@ -22,6 +26,11 @@ def pytest_addoption(parser):
 
 @pytest.fixture(scope="class")
 def class_characters_client(request) -> CharactersClient:
+    """
+    Фикстура pytest для создания экземпляра класса CharactersClient с аутентификацией.
+    :param request: Объект запроса фикстуры.
+    :return: Экземпляр класса CharactersClient.
+    """
     login = request.config.getoption("--login")
     password = request.config.getoption("--password")
     client = get_http_client(URL.MAIN, login, password)
@@ -29,11 +38,20 @@ def class_characters_client(request) -> CharactersClient:
 
 @pytest.fixture(scope="class")
 def class_characters_unauthenticated_client() -> CharactersClient:
+    """
+    Фикстура pytest для создания экземпляра класса CharactersClient без аутентификации.
+    :return: Экземпляр класса CharactersClient.
+    """
     client = get_http_client(URL.MAIN, None, None)
     return CharactersClient(client=client)
 
 @pytest.fixture(scope="class")
 def class_character_client(request) -> CharacterClient:
+    """
+    Фикстура pytest для создания экземпляра класса CharacterClient с аутентификацией.
+    :param request: Объект запроса фикстуры.
+    :return: Экземпляр класса CharacterClient.
+    """
     login = request.config.getoption("--login")
     password = request.config.getoption("--password")
     client = get_http_client(URL.MAIN, login, password)
@@ -41,11 +59,21 @@ def class_character_client(request) -> CharacterClient:
 
 @pytest.fixture(scope="class")
 def class_character_unauthenticated_client() -> CharacterClient:
+    """
+    Фикстура pytest для создания экземпляра класса CharacterClient без аутентификации.
+    :return: Экземпляр класса CharacterClient.
+    """
     client = get_http_client(URL.MAIN, None, None)
     return CharacterClient(client=client)
 
 @pytest.fixture(scope="session")
 def class_reset_client(request) -> ResetClient:
+    """
+    Фикстура pytest для создания экземпляра класса ResetClient с аутентификацией.
+    Используется для сброса состояния базы данных между тестовыми сессиями.
+    :param request: Объект запроса фикстуры.
+    :return: Экземпляр класса ResetClient.
+    """
     login = request.config.getoption("--login")
     password = request.config.getoption("--password")
     client = get_http_client(URL.MAIN, login, password)
@@ -53,6 +81,10 @@ def class_reset_client(request) -> ResetClient:
 
 @pytest.fixture(scope="function")
 def reset_database(class_reset_client):
+    """
+    Фикстура pytest для сброса состояния базы данных после выполнения теста.
+    :param class_reset_client: Фикстура класса ResetClient для вызова метода сброса.
+    """
     yield
 
     with allure.step("Reset data"):

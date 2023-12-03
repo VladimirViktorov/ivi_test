@@ -5,10 +5,15 @@ from assertions.base.assertion_types import AssertionTypes
 
 T = TypeVar('T')
 
-
 class AssertionMixin(AssertionBase):
 
     def is_length(self, length: int):
+        """
+        Проверяет, что ожидаемый объект имеет заданную длину.
+        :param length: Ожидаемая длина.
+        :raises NotImplementedError: Если у ожидаемого объекта нет атрибута длины.
+        :return: Ссылку на себя для цепочки вызовов.
+        """
         step_name = f'Checking that "{self._description}" has {length} length'
         with self.step_provider(step_name):
 
@@ -23,6 +28,11 @@ class AssertionMixin(AssertionBase):
         return self
     
     def to_be_equal(self, actual: T):
+        """
+        Проверяет равенство ожидаемого значения и фактического.
+        :param actual: Фактическое значение для сравнения.
+        :return: Ссылку на себя для цепочки вызовов.
+        """
         step_name = f'Checking that "{self._description}" equals to "{self.expected}"'
         with self.step_provider(step_name):
             template = self._error_template(actual, AssertionTypes.EQUAL)
@@ -31,6 +41,11 @@ class AssertionMixin(AssertionBase):
         return self
 
     def not_to_be_equal(self, actual: T):
+        """
+        Проверяет неравенство ожидаемого значения и фактического.
+        :param actual: Фактическое значение для сравнения.
+        :return: Ссылку на себя для цепочки вызовов.
+        """
         step_name = f'Checking that "{self._description}" not equals to "{self.expected}"'
         with self.step_provider(step_name):
             template = self._error_template(actual, AssertionTypes.NOT_EQUAL)
@@ -39,6 +54,11 @@ class AssertionMixin(AssertionBase):
         return self
 
     def in_(self, actual: T):
+        """
+        Проверяет, содержится ли ожидаемое значение в переданном объекте.
+        :param actual: Объект, в котором должно содержаться ожидаемое значение.
+        :return: Ссылку на себя для цепочки вызовов.
+        """
         step_name = f'Checking that "{self._description}" in "{self.expected}"'
         with self.step_provider(step_name):
             template = self._error_template(actual, AssertionTypes.IN_)

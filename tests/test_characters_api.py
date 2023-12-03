@@ -4,12 +4,13 @@ from assertions.base.solutions import assert_status_code, assert_error
 from assertions.schema import validate_schema
 from api.characters_api import CharactersClient
 from models.schemes import SCHEMES
-from constant import URL, APIErrors
+from constant import APIErrors
 
 @allure.feature('Characters')
 @allure.story('Characters API')
 class TestCharacters:
     
+    @pytest.mark.regression
     @allure.title("TC-001")
     @allure.description("Correct receipt of all characters")
     def test_get_all_characters(self, class_characters_client: CharactersClient):
@@ -19,6 +20,7 @@ class TestCharacters:
         assert_status_code(response.status_code, 200)
         validate_schema(json_response, SCHEMES.CharactersDict)
     
+    @pytest.mark.regression
     @allure.title("TC-002")
     @allure.description("Call the method without authentication")
     def test_get_all_characters_with_unauthenticated_client(self, class_characters_unauthenticated_client: CharactersClient):

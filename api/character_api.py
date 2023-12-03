@@ -17,3 +17,8 @@ class CharacterClient(APIClient):
     def put_character_api(self, body: dict) -> Response:
         with allure.step(f"Change the character with the parameters '{body}'"):
             return self.client.put(APIRoutes.CHARACTER, json=body)
+    
+    def delete_character_api(self, name_character) -> Response:
+        with allure.step(f"Delete information about a character named '{name_character}'"):
+            params = {'name': name_character}
+            return self.client.delete(APIRoutes.CHARACTER, params=params)
