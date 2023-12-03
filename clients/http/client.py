@@ -81,6 +81,35 @@ class HTTPClient:
             timeout=timeout
         )
 
+    @allure.step('Making PUT request to "{url}"')
+    def put(
+        self,
+        url: URLTypes,
+        *,
+        data: RequestData = None,
+        files: RequestFiles = None,
+        json: typing.Optional[typing.Any] = None,
+        params: QueryParamTypes = None,
+        headers: HeaderTypes = None,
+        cookies: CookieTypes = None,
+        auth: typing.Optional[AuthBase] = None,
+        follow_redirects: bool = True,
+        timeout: TimeoutTypes = None,
+    ) -> Response:
+        url = self._full_url(url)
+        return self.session.put(
+            url,
+            data=data,
+            files=files,
+            json=json,
+            params=params,
+            headers=headers,
+            cookies=cookies,
+            auth=auth,
+            allow_redirects=follow_redirects,
+            timeout=timeout
+        )
+    
     @allure.step('Making PATCH request to "{url}"')
     def patch(
         self,
